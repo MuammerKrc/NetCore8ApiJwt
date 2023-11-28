@@ -258,3 +258,4 @@ src/ZorluZone.Intranet.Mvc/wwwroot/media
 src/ZorluZone.Admin.Mvc/App_Data/Logs/Logs.txt
 src/ZorluZone.Intranet.Mvc/App_Data/Logs/Logs.txt
 IdentityMemberships/appsettings.Development.json
+ApiLayer/appsettings.Development.json
