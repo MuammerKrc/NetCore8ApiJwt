@@ -10,7 +10,8 @@ namespace Application.Abstractions.Services
 {
 	public interface ITokenService
 	{
-		JWTokens CreateAccessToken(AppUser appUser);
+		JWTokens CreateAccessToken(AppUser appUser, List<string> roles);
+		string CreateRefreshToken(Guid userId);
 
 	}
 }
