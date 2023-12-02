@@ -8,6 +8,7 @@ using Application.Abstractions.Services;
 using Application.Abstractions.Services.BaseServices;
 using Application.Dtos.AuthDtos;
 using Application.Dtos.UserDtos;
+using Application.Exceptions;
 using AutoMapper;
 using Domain.IdentityEntities;
 using Microsoft.AspNetCore.Identity;
@@ -41,9 +42,31 @@ namespace Persistence.Services
 			if (response.Succeeded)
 			{
 				var tokens = _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
+				return tokens;
 			}
 
-			throw new Exception();
+			throw new Exception("Bir hata meydana geldi.");
+		}
+
+		public async Task<JWTokensDto> UserLogin(UserLoginDto loginDto)
+		{
+			var user = await _userManager.FindByEmailAsync(loginDto.Email);
+			if (user == null)
+				throw new UserFriendlyExceptions("Bu email ve şifre birbiriyle uyuşmamaktadır.");
+
+			var passwordCheck = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+			if (!passwordCheck)
+				throw new UserFriendlyExceptions("Bu email ve şifre birbiriyle uyuşmamaktadır.");
+
+			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
+		}
+
+		public async Task<JWTokensDto> LoginWithRefreshToken(LoginWithRefreshTokenDto refreshTokenDto)
+		{
+			var userId = _tokenService.ValidateRefreshTokenAndCreateAccessToken(refreshTokenDto.RefreshToken);
+			var user = await _userManager.FindByIdAsync(userId);
+			if (user == null) throw new UserFriendlyExceptions("Bu kullanıcı bulunamadı");
+			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
 		}
 	}
 }

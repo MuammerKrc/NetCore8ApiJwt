@@ -12,6 +12,8 @@ namespace Application.Abstractions.Services
 	{
 		JWTokens CreateAccessToken(AppUser appUser, List<string> roles);
 		string CreateRefreshToken(Guid userId);
+		string ValidateRefreshTokenAndCreateAccessToken(string refreshToken);
+
 
 	}
 }

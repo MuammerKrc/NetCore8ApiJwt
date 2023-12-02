@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Abstractions.Services;
 using Application.ConfigurationModels;
+using Application.Exceptions;
 using Domain.AuthEntities;
 using Domain.IdentityEntities;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +54,7 @@ namespace Infrastructure.Services
 				new Claim(JwtRegisteredClaimNames.NameId, appUser.Id.ToString() ?? ""),
 				new Claim(JwtRegisteredClaimNames.Name, appUser.Name ?? ""),
 				new Claim(JwtRegisteredClaimNames.Email, appUser.Email ?? ""),
-				new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString())
+				new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
 			});
 
 
@@ -81,6 +82,7 @@ namespace Infrastructure.Services
 					new Claim(JwtRegisteredClaimNames.NameId,userId.ToString()),
 					new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
 				}),
+
 				Audience = _tokenConfigurationModels.Audience,
 				SigningCredentials = signingCredentials,
 				Issuer = _tokenConfigurationModels.Issuer,
@@ -89,6 +91,40 @@ namespace Infrastructure.Services
 			};
 
 			return CreateTokenOnSecurityToken(jwtTokenDescriptor);
+		}
+
+		public string ValidateRefreshTokenAndCreateAccessToken(string refreshToken)
+		{
+			try
+			{
+
+
+				JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+				var response = tokenHandler.ValidateToken(refreshToken, new TokenValidationParameters()
+				{
+					ValidIssuer = _tokenConfigurationModels.Issuer,
+					ValidAudience = _tokenConfigurationModels.Audience,
+					IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_tokenConfigurationModels.RefreshTokenSecurityKey)),
+					ValidateIssuer = true,
+					ValidateLifetime = true,
+					ValidateIssuerSigningKey = true,
+					ClockSkew = TimeSpan.Zero,
+					NameClaimType = Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.NameId,
+
+				}, out _);
+
+				var claimsIdentity = response.Identities.FirstOrDefault(x => x.IsAuthenticated);
+
+				var responseUserId =
+					claimsIdentity.Claims.FirstOrDefault(i => i.Type == ClaimTypes.NameIdentifier);
+				//we need to check also on database to user registered with this token 
+				if (responseUserId == null) throw new Exception("Bir hata meydana geldi");
+				return responseUserId.Value;
+			}
+			catch (Exception e)
+			{
+				throw new Exception("Bir hata meydana geldi.", e);
+			}
 		}
 	}
 

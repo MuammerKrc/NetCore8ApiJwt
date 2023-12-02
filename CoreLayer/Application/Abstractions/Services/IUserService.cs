@@ -13,6 +13,7 @@ namespace Application.Abstractions.Services
 	public interface IUserService
 	{
 		Task<JWTokensDto> CreateUser(CreateUserDto dtos);
-
+		Task<JWTokensDto> UserLogin(UserLoginDto loginDto);
+		Task<JWTokensDto> LoginWithRefreshToken(LoginWithRefreshTokenDto refreshTokenDto);
 	}
 }
