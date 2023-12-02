@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using ApiLayer.EnpointBuilder;
 using Application;
 using Application.ConfigurationModels;
@@ -9,10 +10,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using System.Text;
+using ApiLayer.SwaggerConfigurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.ConfigureSwagger();
 builder.Services.ApplicationRegistrationService(builder.Configuration);
 builder.Services.PersistenceRegistrationService(builder.Configuration);
 builder.Services.InfrastructureRegistrationService(builder.Configuration);
@@ -34,14 +37,14 @@ builder.Services.AddAuthentication(opt =>
 		ValidIssuer = model.Issuer,
 		ValidAudience = model.Audience, //ne gibi izinler verilmiş ona göre seçiyor 
 		IssuerSigningKey = symmetricKey,
-		
+
 		ValidateIssuerSigningKey = true,
 		ValidateAudience = true,
 		ValidateLifetime = true,
 		ValidateIssuer = true,
 
 		ClockSkew = TimeSpan.FromSeconds(10),
-		NameClaimType = JwtRegisteredClaimNames.Name,
+		NameClaimType = ClaimTypes.NameIdentifier,
 		RoleClaimType = "roles"
 	};
 });

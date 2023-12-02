@@ -12,6 +12,7 @@ using Application.Exceptions;
 using AutoMapper;
 using Domain.IdentityEntities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Persistence.Services.BaseServices;
 
 namespace Persistence.Services
@@ -32,7 +33,6 @@ namespace Persistence.Services
 			_roleManager = roleManager;
 			_tokenService = tokenService;
 		}
-
 		public async Task<JWTokensDto> CreateUser(CreateUserDto createUserDto)
 		{
 			var user = _mapper.Map<AppUser>(createUserDto);
@@ -47,7 +47,6 @@ namespace Persistence.Services
 
 			throw new Exception("Bir hata meydana geldi.");
 		}
-
 		public async Task<JWTokensDto> UserLogin(UserLoginDto loginDto)
 		{
 			var user = await _userManager.FindByEmailAsync(loginDto.Email);
@@ -60,7 +59,6 @@ namespace Persistence.Services
 
 			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
 		}
-
 		public async Task<JWTokensDto> LoginWithRefreshToken(LoginWithRefreshTokenDto refreshTokenDto)
 		{
 			var userId = _tokenService.ValidateRefreshTokenAndCreateAccessToken(refreshTokenDto.RefreshToken);

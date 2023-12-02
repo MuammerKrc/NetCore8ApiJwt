@@ -7,7 +7,7 @@ namespace ApiLayer.Controllers
 {
 	[ApiController]
 	[Route("[controller]/[action]")]
-	public class AccountController : Controller
+	public class AccountController : ControllerBase
 	{
 		private readonly IUserService _userService;
 
