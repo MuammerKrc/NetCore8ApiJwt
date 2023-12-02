@@ -27,7 +27,7 @@ namespace Infrastructure.Services
 
 		private SigningCredentials GetSigningCredentials(string key)
 		{
-			var keyByte = Encoding.UTF8.GetBytes(key);
+			var keyByte = Encoding.ASCII.GetBytes(key);
 			var symmetricKey = new SymmetricSecurityKey(keyByte);
 			return new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256Signature);
 
@@ -44,6 +44,8 @@ namespace Infrastructure.Services
 		{
 			SigningCredentials signingCredentials =
 				GetSigningCredentials(_tokenConfigurationModels.AccessTokenSecurityKey);
+
+
 
 			var claims = roles.Select(i => new Claim("roles", i)).ToList();
 			claims.AddRange(new List<Claim>()

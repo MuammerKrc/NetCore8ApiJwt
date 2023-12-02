@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ProjectEntities
+namespace Domain.BaseEntities
 {
-	public class BaseEntity
+	public interface IBaseModel
 	{
+		public bool SoftDeleted { get; set; }
 	}
 }
