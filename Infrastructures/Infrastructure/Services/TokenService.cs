@@ -48,7 +48,7 @@ namespace Infrastructure.Services
 
 
 
-			var claims = roles.Select(i => new Claim("roles", i)).ToList();
+			var claims = roles.Select(i => new Claim(ClaimTypes.Role, i)).ToList();
 			claims.AddRange(new List<Claim>()
 			{
 				new Claim(JwtRegisteredClaimNames.NameId, appUser.Id.ToString() ?? ""),
@@ -56,7 +56,8 @@ namespace Infrastructure.Services
 				new Claim(JwtRegisteredClaimNames.Email, appUser.Email ?? ""),
 				new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
 			});
-
+			//JwtSecurityToken tokne= new JwtSecurityToken(issuer:"deneme",expires:DateTime.UtcNow.AddMinutes(2),notBefore:DateTime.Now)
+			
 
 			var jwtTokenDescriptor = new SecurityTokenDescriptor()
 			{

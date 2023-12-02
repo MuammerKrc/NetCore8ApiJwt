@@ -14,7 +14,4 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\CoreLayer\Application\Application.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="SwaggerConfigurations\" />
-	</ItemGroup>
 </Project>

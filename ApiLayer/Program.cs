@@ -45,7 +45,7 @@ builder.Services.AddAuthentication(opt =>
 
 		ClockSkew = TimeSpan.FromSeconds(10),
 		NameClaimType = ClaimTypes.NameIdentifier,
-		RoleClaimType = "roles"
+		RoleClaimType = ClaimTypes.Role
 	};
 });
 
@@ -56,6 +56,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+builder.Services.AddStaticRolesConfigurationExtensions();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -64,8 +66,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 app.BuildAllAndPoints();
 app.Run();

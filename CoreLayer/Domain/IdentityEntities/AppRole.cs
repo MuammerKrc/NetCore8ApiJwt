@@ -9,7 +9,6 @@ namespace Domain.IdentityEntities
 {
 	public class AppRole : IdentityRole<Guid>
 	{
-		public string Name { get; set; }
-		public string Surname { get; set; }
+	
 	}
 }

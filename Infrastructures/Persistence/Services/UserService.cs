@@ -9,10 +9,12 @@ using Application.Abstractions.Services.BaseServices;
 using Application.Dtos.AuthDtos;
 using Application.Dtos.UserDtos;
 using Application.Exceptions;
+using Application.RoleNameProviders;
 using AutoMapper;
 using Domain.IdentityEntities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Persistence.Services.BaseServices;
 
 namespace Persistence.Services
@@ -38,12 +40,14 @@ namespace Persistence.Services
 			var user = _mapper.Map<AppUser>(createUserDto);
 			user.UserName = user.Email;
 			var response = await _userManager.CreateAsync(user, createUserDto.Password);
-
 			if (response.Succeeded)
 			{
-				var tokens = _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
+				await _userManager.AddToRoleAsync(user, RoleNameProvider.CustomerRole);
+				var roles = await _userManager.GetRolesAsync(user);
+				var tokens = _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, roles.ToList()));
 				return tokens;
 			}
+
 
 			throw new Exception("Bir hata meydana geldi.");
 		}
@@ -54,17 +58,19 @@ namespace Persistence.Services
 				throw new UserFriendlyExceptions("Bu email ve şifre birbiriyle uyuşmamaktadır.");
 
 			var passwordCheck = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+
 			if (!passwordCheck)
 				throw new UserFriendlyExceptions("Bu email ve şifre birbiriyle uyuşmamaktadır.");
-
-			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
+			var roles = await _userManager.GetRolesAsync(user);
+			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, roles.ToList()));
 		}
 		public async Task<JWTokensDto> LoginWithRefreshToken(LoginWithRefreshTokenDto refreshTokenDto)
 		{
 			var userId = _tokenService.ValidateRefreshTokenAndCreateAccessToken(refreshTokenDto.RefreshToken);
 			var user = await _userManager.FindByIdAsync(userId);
 			if (user == null) throw new UserFriendlyExceptions("Bu kullanıcı bulunamadı");
-			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, new List<string>() { "admin", "customer" }));
+			var roles = await _userManager.GetRolesAsync(user);
+			return _mapper.Map<JWTokensDto>(_tokenService.CreateAccessToken(user, roles.ToList()));
 		}
 	}
 }
