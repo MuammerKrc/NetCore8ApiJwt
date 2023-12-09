@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ApiLayer.SwaggerConfigurations
 {
@@ -22,7 +24,7 @@ namespace ApiLayer.SwaggerConfigurations
 				options.AddSecurityDefinition(_bearer, CreateScheme());
 				options.AddSecurityRequirement(CreateRequirement());
 			});
-		
+
 
 		}
 
@@ -51,8 +53,10 @@ namespace ApiLayer.SwaggerConfigurations
 							Type = ReferenceType.SecurityScheme,
 							Id = _bearer
 						},
+						Scheme = JwtBearerDefaults.AuthenticationScheme,
+						Name = JwtBearerDefaults.AuthenticationScheme
 					},
-					new string[] {}
+					new List<string>()
 				}
 			};
 		}
@@ -62,6 +66,8 @@ namespace ApiLayer.SwaggerConfigurations
 			return new OpenApiInfo()
 			{
 				Version = _version,
+				Title = "AuthComponent",
+	
 			};
 		}
 	}

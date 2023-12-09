@@ -11,6 +11,9 @@ using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using System.Text;
 using ApiLayer.SwaggerConfigurations;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,17 @@ builder.Services.ConfigureSwagger();
 builder.Services.ApplicationRegistrationService(builder.Configuration);
 builder.Services.PersistenceRegistrationService(builder.Configuration);
 builder.Services.InfrastructureRegistrationService(builder.Configuration);
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAllCors",
+		builder =>
+		{
+			builder.AllowAnyHeader();
+			builder.AllowAnyMethod();
+			builder.AllowAnyOrigin();
+		});
+});
 
 builder.Services.AddAuthentication(opt =>
 {
@@ -61,10 +75,19 @@ builder.Services.AddStaticRolesConfigurationExtensions();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger();
-	app.UseSwaggerUI();
+	app.UseSwagger(
+		options =>
+		{
+		} );
+	app.UseSwaggerUI(options =>
+	{
+	
+	} );
+	
 }
 
+
+app.UseCors("AllowAllCors");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
