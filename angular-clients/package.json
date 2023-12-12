@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "endpoint":"openapi-generator-cli generate -g typescript-angular -i http://localhost:5245/swagger/v1/swagger.json -o .\\src\\generated_endpoints --skip-validate-spec"
+
   },
   "private": true,
   "dependencies": {
