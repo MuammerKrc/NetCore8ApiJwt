@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiModule, BASE_PATH, Configuration, ConfigurationParameters } from 'src/generated_endpoints';
+import { UiModule } from './ui/ui.module';
+import { AuthsModule } from './auths/auths.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { ApiModule, BASE_PATH, Configuration, ConfigurationParameters } from 'sr
     ApiModule.forRoot(apiConfigFactory),
     BrowserModule,
     AppRoutingModule,
+    UiModule,
+    AuthsModule,
     HttpClientModule
   ],
   providers: [
@@ -25,7 +29,7 @@ export class AppModule { }
 export function apiConfigFactory (): Configuration {
   const params: ConfigurationParameters = {
     // set configuration parameters here.
-    
+
   }
   return new Configuration(params);
 }

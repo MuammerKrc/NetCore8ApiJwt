@@ -11,6 +11,10 @@ import { LayoutModule } from './layout/layout.module';
     CommonModule,
     ComponentsModule,
     LayoutModule
+  ],
+  exports:[
+    LayoutModule
   ]
+
 })
 export class AuthsModule { }
