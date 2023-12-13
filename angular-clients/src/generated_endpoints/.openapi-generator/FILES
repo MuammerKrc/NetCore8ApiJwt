@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.module.ts
 api/account.service.ts
@@ -13,6 +12,7 @@ index.ts
 model/createUserDto.ts
 model/dateOnly.ts
 model/dayOfWeek.ts
+model/jWTokensDto.ts
 model/loginWithRefreshTokenDto.ts
 model/models.ts
 model/userLoginDto.ts

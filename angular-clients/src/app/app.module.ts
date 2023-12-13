@@ -22,6 +22,16 @@ import { AuthsModule } from './auths/auths.module';
   ],
   providers: [
     { provide: BASE_PATH, useValue: 'http://localhost:5245' },
+    // {
+    //   provide: Configuration,
+    //   useFactory: (authService: AuthService) => new Configuration(
+    //     {
+    //       accessToken: authService.getAccessToken.bind(authService)
+    //     }
+    //   ),
+    //   deps: [AuthService],
+    //   multi: false
+    // }
   ],
   bootstrap: [AppComponent]
 })
@@ -29,7 +39,6 @@ export class AppModule { }
 export function apiConfigFactory (): Configuration {
   const params: ConfigurationParameters = {
     // set configuration parameters here.
-
   }
   return new Configuration(params);
 }

@@ -1,1 +1,27 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="mb-3">
+    <label for="name"  class="form-label" >Name</label>
+    <input type="text" formControlName="Name"  class="form-control" [ngClass]="{'bg-danger':registerForm.controls.Name.errors}" id="name" >
+  </div>
+  <div class="mb-3">
+    <label for="surname" class="form-label">Surname</label>
+    <input type="text" [ngClass]="{'bg-danger':registerForm.get('Surname').errors}" formControlName="Surname" class="form-control" id="surname" >
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email"[ngClass]="{'bg-danger':registerForm.get('Email').errors}"  formControlName="Email" class="form-control" id="email" >
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" [ngClass]="{'bg-danger':registerForm.get('Password').errors}" formControlName="Password" class="form-control" id="password" >
+  </div>
+  <div class="mb-3">
+    <label for="passwordcheck" class="form-label">Password Check</label>
+    <input type="password"[ngClass]="{'bg-danger':registerForm.get('PasswordCheck').errors}" formControlName="PasswordCheck" class="form-control" id="passwordcheck">
+  </div>
+  <!-- <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div> -->
+  <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+</form>
