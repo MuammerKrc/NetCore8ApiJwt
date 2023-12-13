@@ -8,14 +8,6 @@ import { AuthorizeService, WeatherForecastService } from 'src/generated_endpoint
 })
 export class AppComponent {
   title = 'angular-clients';
-  constructor(private deme:WeatherForecastService,private asd:AuthorizeService){
-    deme.getWeatherForecast().subscribe( (a)=>{
-      console.log("asddd");
-      console.log("slm");
+  constructor(){}
 
-    });
-    asd.authorizeAdminRoleCheckPost().subscribe((x)=>{
-    console.log(x);
-    });
-  }
 }
