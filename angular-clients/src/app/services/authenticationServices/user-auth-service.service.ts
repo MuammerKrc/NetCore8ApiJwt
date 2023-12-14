@@ -9,9 +9,14 @@ export class UserAuthServiceService {
 
   constructor(private jwtHelperService:JwtHelperService,
     private tokenStorageService:TokenStorageService) {}
-    private accessToken=this.tokenStorageService.accessToken;
+
 
     get isAuthenticated():boolean{
-      return  !this.jwtHelperService.isTokenExpired(this.accessToken);
+      return  !this.jwtHelperService.isTokenExpired(this.tokenStorageService.accessToken);
     }
+
+    signOut(){
+      this.tokenStorageService.removeToken();
+    }
+
 }

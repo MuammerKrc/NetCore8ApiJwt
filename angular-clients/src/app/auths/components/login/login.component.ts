@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from 'src/app/services/authenticationServices/token-storage.service';
 import { AccountService, UserLoginDto } from 'src/generated_endpoints';
 
@@ -11,7 +12,9 @@ import { AccountService, UserLoginDto } from 'src/generated_endpoints';
 export class LoginComponent  implements OnInit {
   constructor(
     private formBuilder:FormBuilder,
-    private accountService:AccountService,private tokenService:TokenStorageService){
+    private accountService:AccountService,private tokenService:TokenStorageService,private activeRouter:ActivatedRoute,private router:Router){
+
+
   }
   loginForm:FormGroup;
 
@@ -25,9 +28,19 @@ export class LoginComponent  implements OnInit {
 
   onSubmit(){
     if(this.loginForm.valid){
+
       var userLoginDto=this.loginForm.value as UserLoginDto;
       this.accountService.accountLoginPost(userLoginDto).subscribe(x=>{
         this.tokenService.setToken(x);
+        this.activeRouter.queryParams.subscribe(x=>{
+          console.log(x);
+          var returnUrl=x["returnUrl"];
+          if(returnUrl!=null&&returnUrl!=""){
+            this.router.navigateByUrl(returnUrl);
+          }else{
+            this.router.navigateByUrl("/");
+          }
+        })
       });
     }
   }

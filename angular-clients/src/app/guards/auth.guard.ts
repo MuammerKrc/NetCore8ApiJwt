@@ -6,8 +6,8 @@ import { UserAuthServiceService } from '../services/authenticationServices/user-
 
 export const AuthGuard: CanActivateFn = (route, state) => {
   var router =inject(Router);
-
   if(!inject(UserAuthServiceService).isAuthenticated) router.navigate(["auth"],{
+
     queryParams:{returnUrl:state.url}
   });
 
