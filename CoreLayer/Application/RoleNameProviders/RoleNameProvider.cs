@@ -8,11 +8,7 @@ namespace Application.RoleNameProviders
 {
 	public static class RoleNameProvider
 	{
-		public static string Deneme
-		{
-			get;
-			set;
-		} = "deme";
+		
 		//adminRole
 		public static string AdminRole = "AdminRole";
 

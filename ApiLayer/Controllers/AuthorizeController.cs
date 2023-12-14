@@ -12,7 +12,7 @@ namespace ApiLayer.Controllers
 	{
 
 		[HttpPost]
-		[Authorize(Roles = "AdminRole")]
+		[Authorize(Roles = nameof(RoleNameProvider.CustomerRole))]
 		public ActionResult AdminRoleCheck()
 		{
 			Console.WriteLine(HttpContext.User.Identity.Name);

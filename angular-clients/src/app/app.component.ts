@@ -9,5 +9,4 @@ import { AuthorizeService, WeatherForecastService } from 'src/generated_endpoint
 export class AppComponent {
   title = 'angular-clients';
   constructor(){}
-
 }

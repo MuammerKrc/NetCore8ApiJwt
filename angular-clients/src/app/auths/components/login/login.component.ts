@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TokenStorageService } from 'src/app/services/authenticationServices/token-storage.service';
 import { AccountService, UserLoginDto } from 'src/generated_endpoints';
 
 @Component({
@@ -8,7 +9,9 @@ import { AccountService, UserLoginDto } from 'src/generated_endpoints';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent  implements OnInit {
-  constructor(private formBuilder:FormBuilder,private accountService:AccountService){
+  constructor(
+    private formBuilder:FormBuilder,
+    private accountService:AccountService,private tokenService:TokenStorageService){
   }
   loginForm:FormGroup;
 
@@ -24,7 +27,7 @@ export class LoginComponent  implements OnInit {
     if(this.loginForm.valid){
       var userLoginDto=this.loginForm.value as UserLoginDto;
       this.accountService.accountLoginPost(userLoginDto).subscribe(x=>{
-        console.log(x);
+        this.tokenService.setToken(x);
       });
     }
   }

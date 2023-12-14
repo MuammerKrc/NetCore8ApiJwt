@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthorizeService } from 'src/generated_endpoints';
 
 @Component({
   selector: 'app-home',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  constructor(private service:AuthorizeService){
+    service.authorizeAdminRoleCheckPost().subscribe(x=>{
+      x
+    });
+  }
 
 }
