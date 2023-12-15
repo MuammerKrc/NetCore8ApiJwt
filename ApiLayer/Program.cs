@@ -14,6 +14,7 @@ using ApiLayer.SwaggerConfigurations;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
+using ApiLayer.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,7 +58,7 @@ builder.Services.AddAuthentication(opt =>
 		ValidateLifetime = true,
 		ValidateIssuer = true,
 
-		ClockSkew = TimeSpan.FromSeconds(10),
+		ClockSkew = TimeSpan.FromSeconds(5),
 		NameClaimType = ClaimTypes.NameIdentifier,
 		RoleClaimType = ClaimTypes.Role
 	};
@@ -75,18 +76,12 @@ builder.Services.AddStaticRolesConfigurationExtensions();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger(
-		options =>
-		{
-		} );
-	app.UseSwaggerUI(options =>
-	{
-	
-	} );
-	
+	app.UseSwagger(options =>{} );
+	app.UseSwaggerUI(options =>{});
 }
-
-
+app.ConfigureExceptionHandler();
+app.UseStaticFiles();
+//app.UseHttpLogging();
 app.UseCors("AllowAllCors");
 app.UseHttpsRedirection();
 app.UseAuthentication();

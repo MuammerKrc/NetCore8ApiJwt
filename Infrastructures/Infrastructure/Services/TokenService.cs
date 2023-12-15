@@ -88,7 +88,7 @@ namespace Infrastructure.Services
 				SigningCredentials = signingCredentials,
 				Issuer = _tokenConfigurationModels.Issuer,
 				NotBefore = DateTime.UtcNow,
-				Expires = DateTime.UtcNow.AddMinutes(_tokenConfigurationModels.RefreshTokenExpirationTime),
+				Expires = DateTime.UtcNow.AddDays(_tokenConfigurationModels.RefreshTokenExpirationTime),
 			};
 
 			return CreateTokenOnSecurityToken(jwtTokenDescriptor);
