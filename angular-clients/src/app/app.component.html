@@ -12,6 +12,9 @@
           <li class="nav-item" *ngIf="auth.isAuthenticated">
             <a class="nav-link active" aria-current="page" routerLink="/" >Need Authenticated</a>
           </li>
+          <li class="nav-item" *ngIf="auth.isAuthenticated">
+            <a class="nav-link active" aria-current="page" routerLink="/product" >Product</a>
+          </li>
           <li class="nav-item" *ngIf="!auth.isAuthenticated">
             <a class="nav-link active" aria-current="page" routerLink="/auth/register">Register</a>
           </li>
