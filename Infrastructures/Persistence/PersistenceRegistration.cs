@@ -1,20 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Abstractions.Repositories;
-using Application.Abstractions.Services;
-using Application.Abstractions.Services.BaseServices;
-using Application.Dtos.AuthDtos;
-using Application.Dtos.UserDtos;
+﻿using Application.Abstractions.Services;
 using Application.IUnitOfWorks;
 using Domain.IdentityEntities;
-using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +28,7 @@ namespace Persistence
 
 			services.AddIdentity<AppUser, AppRole>(opt =>
 			{
+
 				opt.User.RequireUniqueEmail = true;
 				opt.Password.RequireDigit = false;
 				opt.Password.RequireLowercase = false;
@@ -47,6 +36,7 @@ namespace Persistence
 				opt.Password.RequireNonAlphanumeric = false;
 				opt.Password.RequiredLength = 5;
 				opt.Password.RequiredUniqueChars = 3;
+
 			}).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
 			services.AddAutoMapper(typeof(Mapper));
@@ -56,6 +46,7 @@ namespace Persistence
 
 			//Services
 			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<IProductService, ProductService>();
 		}
 		public static IEndpointRouteBuilder BuildAllAndPoints(this IEndpointRouteBuilder endpointRouteBuilder)
 		{

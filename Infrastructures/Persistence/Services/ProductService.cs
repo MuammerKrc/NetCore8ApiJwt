@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Repositories;
+using Application.Abstractions.Services;
 using Application.Dtos.EntitiesDtos;
 using Application.IUnitOfWorks;
 using Domain.Entities;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
-	public class ProductService : BaseService
+	public class ProductService : BaseService ,IProductService
 	{
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IProductRepositories _productRepositories;
@@ -31,5 +32,10 @@ namespace Persistence.Services
 			await _unitOfWork.SaveAsync();
 		}
 
+		public async Task<List<ProductDto>> GetAllProduct()
+		{
+			var result = await _productRepositories.GetAllAsync();
+			return _mapper.Map<List<ProductDto>>(result);
+		}
 	}
 }
