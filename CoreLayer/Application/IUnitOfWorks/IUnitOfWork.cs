@@ -13,5 +13,6 @@ namespace Application.IUnitOfWorks
 		Task<bool> SaveAsync();
 
 		public IRefreshTokenRepositories RefreshTokenRepositories { get; }
+		public IProductRepositories ProductRepositories { get; }
 	}
 }

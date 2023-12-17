@@ -21,7 +21,8 @@ namespace ApiLayer.Extensions
 						{
 							context.Response.StatusCode = 502;
 							context.Response.ContentType = MediaTypeNames.Application.Json;
-							await context.Response.WriteAsync(JsonSerializer.Serialize(new
+							await context.Response.WriteAsync(JsonSerializer.Serialize(
+								new
 							{
 								StatusCode = 502,
 								Message = contextFeature.Error.Message,

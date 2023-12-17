@@ -7,6 +7,7 @@ using Application.Abstractions.Repositories;
 using Application.IUnitOfWorks;
 using Infrastructure.Repositories;
 using Persistence.DbContexts;
+using Persistence.Repositories;
 
 namespace Persistence.UnitOfWorks
 {
@@ -19,8 +20,9 @@ namespace Persistence.UnitOfWorks
 		}
 
 		private RefreshTokenRepositories _refreshTokenRepositories;
-
+		private ProductRepositories _productRepositories;
 		public IRefreshTokenRepositories RefreshTokenRepositories => _refreshTokenRepositories ??= new RefreshTokenRepositories(context: _context);
+		public IProductRepositories ProductRepositories => _productRepositories ??= new ProductRepositories(context: _context);
 
 		public async Task<bool> SaveAsync()
 		{
