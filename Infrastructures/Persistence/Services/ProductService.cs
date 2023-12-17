@@ -37,5 +37,6 @@ namespace Persistence.Services
 			var result = await _productRepositories.GetAllAsync();
 			return _mapper.Map<List<ProductDto>>(result);
 		}
+
 	}
 }
