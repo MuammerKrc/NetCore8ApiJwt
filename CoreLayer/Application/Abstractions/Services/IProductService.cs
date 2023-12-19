@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.EntitiesDtos;
+using Domain.PaginationEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Application.Abstractions.Services
 {
 	public interface IProductService
 	{
-		Task<List<ProductDto>> GetAllProduct();
+		Task<List<ProductDto>> GetAllProduct(Pagination pagination);
 		Task CreateProduct(ProductDto dto);
 
 	}

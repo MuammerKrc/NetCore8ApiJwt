@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Services;
 using Application.Dtos.AuthDtos;
 using Application.Dtos.EntitiesDtos;
+using Domain.PaginationEntities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiLayer.Controllers
@@ -19,12 +20,12 @@ namespace ApiLayer.Controllers
 
 		[HttpGet]
 		[ProducesResponseType(typeof(List<ProductDto>), StatusCodes.Status200OK)]
-		public async Task<IActionResult> GetAllProdutsAsync()
+		public async Task<IActionResult> GetAllProdutsAsync([FromQuery]Pagination pagination)
 		{
-			return Ok(await _productService.GetAllProduct());
+			return Ok(await _productService.GetAllProduct(pagination));
 		}
 		[HttpPost]
-		public async Task<IActionResult> CreateProductAsync([FromBody]ProductDto dto)
+		public async Task<IActionResult> CreateProductAsync([FromBody] ProductDto dto)
 		{
 			await _productService.CreateProduct(dto);
 			return Ok();

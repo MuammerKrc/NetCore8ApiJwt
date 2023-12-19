@@ -3,6 +3,9 @@ using Application.Abstractions.Services;
 using Application.Dtos.EntitiesDtos;
 using Application.IUnitOfWorks;
 using Domain.Entities;
+using Domain.PaginationEntities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Persistence.Services.BaseServices;
 using System;
@@ -32,9 +35,9 @@ namespace Persistence.Services
 			await _unitOfWork.SaveAsync();
 		}
 
-		public async Task<List<ProductDto>> GetAllProduct()
+		public async Task<List<ProductDto>> GetAllProduct(Pagination pagination)
 		{
-			var result = await _productRepositories.GetAllAsync();
+			var result = await _productRepositories.GetContext().Skip((pagination.PageIndex-1) *pagination.TotalCount ).Take(pagination.TotalCount).ToListAsync();
 			return _mapper.Map<List<ProductDto>>(result);
 		}
 

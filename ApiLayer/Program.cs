@@ -81,7 +81,6 @@ if (app.Environment.IsDevelopment())
 }
 app.ConfigureExceptionHandler();
 app.UseStaticFiles();
-//app.UseHttpLogging();
 app.UseCors("AllowAllCors");
 app.UseHttpsRedirection();
 app.UseAuthentication();
