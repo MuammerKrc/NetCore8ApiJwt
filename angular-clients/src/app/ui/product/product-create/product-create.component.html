@@ -1,1 +1,15 @@
-<p>product-create works!</p>
+<form>
+  <div class="form-group mt-2">
+    <label for="name">Adı</label>
+    <input type="text" class="form-control" id="name"  placeholder="Ürün adı giriniz." required #name>
+  </div>
+  <div class="form-group mt-2">
+    <label for="price">Price</label>
+    <input type="number" class="form-control" id="price"  placeholder="Ürün fiyatı giriniz" required #price>
+  </div>
+  <div class="form-group mt-2" >
+    <label for="stock">Stock</label>
+    <input type="number"  class="form-control " id="stock"  placeholder="Ürün stoğunu giriniz" required #stock>
+  </div>
+  <button type="submit" class="btn btn-primary mt-4" (click)="onSubmit($event,name,price,stock)">Kaydet</button>
+</form>
