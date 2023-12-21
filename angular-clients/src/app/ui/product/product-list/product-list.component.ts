@@ -12,14 +12,19 @@ export class ProductListComponent implements AfterViewInit,OnInit {
     constructor(private productService:ProductService) {
     }
 
-    displayedColumns: string[] = ['name', 'stock', 'price'];
+    displayedColumns: string[] = ['name', 'stock', 'price','edit','delete'];
     dataSource = new MatTableDataSource<ProductDto>([]);
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     ngOnInit(): void {
       this.productService.productGetAllProdutsGet().subscribe(products=>{
         this.dataSource.data=products;
-      })
+      });
+    }
+    getProduct(){
+      this.productService.productGetAllProdutsGet().subscribe(products=>{
+        this.dataSource.data=products;
+      });
     }
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;

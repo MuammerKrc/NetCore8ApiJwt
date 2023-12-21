@@ -6,6 +6,7 @@ import { ProductCreateComponent } from './product-create/product-create.componen
 import { RouterModule } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
   imports: [
     CommonModule,
     RouterModule.forChild([{path:"",component:ProductComponent}]),
+    ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule
   ]

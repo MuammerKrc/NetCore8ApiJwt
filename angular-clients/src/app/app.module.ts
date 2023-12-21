@@ -12,10 +12,12 @@ import { TokenStorageService } from './services/authenticationServices/token-sto
 import { ToastrModule } from 'ngx-toastr';
 import { HttpErrorHandlerInterceptorService } from './services/httpServices/http-error-handler-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GeneralDeleteDirective } from './general-delete.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GeneralDeleteDirective
   ],
   imports: [
     ApiModule.forRoot(apiConfigFactory),
