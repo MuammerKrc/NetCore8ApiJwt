@@ -7,19 +7,23 @@ import { RouterModule } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GeneralDeleteDirective } from 'src/app/directives/general-delete.directive';
+import { DialogsModule } from 'src/app/dialogs/dialogs.module';
 
 @NgModule({
   declarations: [
     ProductComponent,
     ProductListComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    GeneralDeleteDirective
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([{path:"",component:ProductComponent}]),
     ReactiveFormsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    DialogsModule
   ]
 })
 export class ProductModule { }

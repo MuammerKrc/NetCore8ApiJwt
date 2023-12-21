@@ -16,6 +16,7 @@ export class ProductListComponent implements AfterViewInit,OnInit {
     dataSource = new MatTableDataSource<ProductDto>([]);
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
     ngOnInit(): void {
       this.productService.productGetAllProdutsGet().subscribe(products=>{
         this.dataSource.data=products;
@@ -28,6 +29,10 @@ export class ProductListComponent implements AfterViewInit,OnInit {
     }
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
+    }
+
+    deletedEventFunc(event:boolean){
+      console.log(event);
     }
   }
 

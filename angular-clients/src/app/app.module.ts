@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -8,16 +7,13 @@ import { ApiModule, BASE_PATH, Configuration, ConfigurationParameters } from 'sr
 import { UiModule } from './ui/ui.module';
 import { AuthsModule } from './auths/auths.module';
 import { JwtModule } from '@auth0/angular-jwt';
-import { TokenStorageService } from './services/authenticationServices/token-storage.service';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpErrorHandlerInterceptorService } from './services/httpServices/http-error-handler-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GeneralDeleteDirective } from './general-delete.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GeneralDeleteDirective
   ],
   imports: [
     ApiModule.forRoot(apiConfigFactory),
