@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>İşlem Kontrolü</h1>
+<div mat-dialog-content>
+  <p>{{data??"Silmek istediğine emin misin?"}}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onYesClick()" cdkFocusInitial>Ok</button>
+</div>
