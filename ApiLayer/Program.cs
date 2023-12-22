@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
 using ApiLayer.Extensions;
+using SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.ConfigureSwagger();
 builder.Services.ApplicationRegistrationService(builder.Configuration);
 builder.Services.PersistenceRegistrationService(builder.Configuration);
 builder.Services.InfrastructureRegistrationService(builder.Configuration);
+builder.Services.SignalRServiceRegistration();
 
 builder.Services.AddCors(options =>
 {
@@ -76,8 +78,8 @@ builder.Services.AddStaticRolesConfigurationExtensions();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-	app.UseSwagger(options =>{} );
-	app.UseSwaggerUI(options =>{});
+	app.UseSwagger(options => { });
+	app.UseSwaggerUI(options => { });
 }
 app.ConfigureExceptionHandler();
 app.UseStaticFiles();
@@ -86,5 +88,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHubsEndpointRegistration();
 app.BuildAllAndPoints();
 app.Run();
