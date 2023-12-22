@@ -12,6 +12,7 @@ namespace Application.Abstractions.Services
 	{
 		Task<List<ProductDto>> GetAllProduct(Pagination pagination);
 		Task CreateProduct(ProductDto dto);
+		Task DeleteProduct(Guid id);
 
 	}
 }

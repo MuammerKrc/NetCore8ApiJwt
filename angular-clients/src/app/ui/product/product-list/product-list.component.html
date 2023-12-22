@@ -26,7 +26,7 @@
 
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef> Delete </th>
-      <td mat-cell appGeneralDelete (deleteEvent)="deletedEventFunc($event)" *matCellDef="let element"> </td>
+      <td mat-cell appGeneralDelete [id]="element.id" (deleteEvent)="deletedEventFunc($event)" *matCellDef="let element"> </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

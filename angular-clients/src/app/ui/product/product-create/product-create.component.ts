@@ -10,10 +10,10 @@ import { ProductDto, ProductService } from 'src/generated_endpoints';
 })
 export class ProductCreateComponent  {
   product:ProductDto={};
-  constructor(private productService:ProductService){
-    }
-    @Output() createdProductEvent :EventEmitter<any>=new EventEmitter<ProductDto>;
-    
+  constructor(private productService:ProductService){}
+
+  @Output() createdProductEvent :EventEmitter<any>=new EventEmitter<ProductDto>;
+
   onSubmit($event:MouseEvent,txtName:HTMLInputElement,txtStock:HTMLInputElement,txtPrice:HTMLInputElement){
     $event.preventDefault();
     this.product.name=txtName.value;

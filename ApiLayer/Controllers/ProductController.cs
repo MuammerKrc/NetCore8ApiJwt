@@ -18,7 +18,7 @@ namespace ApiLayer.Controllers
 			_productService = productService;
 		}
 
-		[HttpGet]
+		[HttpPost]
 		[ProducesResponseType(typeof(List<ProductDto>), StatusCodes.Status200OK)]
 		public async Task<IActionResult> GetAllProdutsAsync([FromQuery]Pagination pagination)
 		{
@@ -28,6 +28,13 @@ namespace ApiLayer.Controllers
 		public async Task<IActionResult> CreateProductAsync([FromBody] ProductDto dto)
 		{
 			await _productService.CreateProduct(dto);
+			return Ok();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> DeleteProductAsync(Guid id)
+		{
+			await _productService.DeleteProduct(id);
 			return Ok();
 		}
 	}

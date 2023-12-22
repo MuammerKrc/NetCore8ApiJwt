@@ -20,7 +20,7 @@ namespace Persistence.Services
 	public class ProductService : BaseService ,IProductService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private readonly IProductRepositories _productRepositories;
+		private  IProductRepositories _productRepositories { get; }
 
 		public ProductService(IServiceProvider provider, IUnitOfWork unitOfWork) : base(provider)
 		{
@@ -39,6 +39,12 @@ namespace Persistence.Services
 		{
 			var result = await _productRepositories.GetContext().Skip((pagination.PageIndex-1) *pagination.TotalCount ).Take(pagination.TotalCount).ToListAsync();
 			return _mapper.Map<List<ProductDto>>(result);
+		}
+
+		public async Task DeleteProduct(Guid id)
+		{
+			await _productRepositories.Delete(id);
+			await _unitOfWork.SaveAsync();
 		}
 
 	}

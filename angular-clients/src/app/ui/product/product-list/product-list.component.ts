@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { DeleteDirectiveEventResponse } from 'src/app/models/delete-directive-event-response';
 import { ProductDto, ProductService } from 'src/generated_endpoints';
 
 @Component({
@@ -18,12 +19,10 @@ export class ProductListComponent implements AfterViewInit,OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
     ngOnInit(): void {
-      this.productService.productGetAllProdutsGet().subscribe(products=>{
-        this.dataSource.data=products;
-      });
+      this.getProduct();
     }
     getProduct(){
-      this.productService.productGetAllProdutsGet().subscribe(products=>{
+      this.productService.productGetAllProdutsPost(1,100).subscribe(products=>{
         this.dataSource.data=products;
       });
     }
@@ -31,8 +30,13 @@ export class ProductListComponent implements AfterViewInit,OnInit {
       this.dataSource.paginator = this.paginator;
     }
 
-    deletedEventFunc(event:boolean){
-      console.log(event);
+    deletedEventFunc(event:DeleteDirectiveEventResponse){
+      if(event.eventResponse){
+          this.productService.productDeleteProductPost(event.id).subscribe(x=>{
+          this.getProduct();
+        });
+      }
+
     }
   }
 

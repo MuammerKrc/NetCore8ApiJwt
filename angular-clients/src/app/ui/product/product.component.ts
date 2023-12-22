@@ -11,23 +11,15 @@ import { DialogsService } from 'src/app/services/common/dialogs.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent  implements OnInit {
-
   @ViewChild(ProductListComponent) productListViewChild:ProductListComponent;
+  constructor(){}
 
-  constructor(private productService:ProductService,private dialogService:DialogsService){
-    dialogService.openDialog({
-      componentType:DeleteDialogComponent,
-      options:{
-      }
-    })
-  }
   ngOnInit(): void {
-    this.productService.productGetAllProdutsGet().subscribe(x=>{
-      console.log(x);
-    })
   }
+  
   createdProductfunc(product:ProductDto){
     this.productListViewChild.getProduct();
-
   }
+
+
 }
