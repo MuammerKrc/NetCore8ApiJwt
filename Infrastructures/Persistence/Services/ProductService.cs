@@ -1,4 +1,5 @@
-﻿using Application.Abstractions.Repositories;
+﻿using Application.Abstractions.Hubs;
+using Application.Abstractions.Repositories;
 using Application.Abstractions.Services;
 using Application.Dtos.EntitiesDtos;
 using Application.IUnitOfWorks;
@@ -17,15 +18,17 @@ using System.Threading.Tasks;
 
 namespace Persistence.Services
 {
-	public class ProductService : BaseService ,IProductService
+	public class ProductService : BaseService, IProductService
 	{
 		private readonly IUnitOfWork _unitOfWork;
-		private  IProductRepositories _productRepositories { get; }
+		private IProductRepositories _productRepositories { get; }
+		private IProductHubService _productHubService;
 
-		public ProductService(IServiceProvider provider, IUnitOfWork unitOfWork) : base(provider)
+		public ProductService(IServiceProvider provider, IUnitOfWork unitOfWork, IProductHubService productHubService) : base(provider)
 		{
 			_unitOfWork = unitOfWork;
 			_productRepositories = _unitOfWork.ProductRepositories;
+			_productHubService = productHubService;
 		}
 
 
@@ -33,11 +36,12 @@ namespace Persistence.Services
 		{
 			_productRepositories.Add(_mapper.Map<Product>(dto));
 			await _unitOfWork.SaveAsync();
+			await _productHubService.ProductAddedMessageAsync("ürün eklendi");
 		}
 
 		public async Task<List<ProductDto>> GetAllProduct(Pagination pagination)
 		{
-			var result = await _productRepositories.GetContext().Skip((pagination.PageIndex-1) *pagination.TotalCount ).Take(pagination.TotalCount).ToListAsync();
+			var result = await _productRepositories.GetContext().Skip((pagination.PageIndex - 1) * pagination.TotalCount).Take(pagination.TotalCount).ToListAsync();
 			return _mapper.Map<List<ProductDto>>(result);
 		}
 

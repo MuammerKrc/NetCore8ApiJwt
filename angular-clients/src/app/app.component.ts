@@ -3,6 +3,7 @@ import { AuthorizeService, ProductService, WeatherForecastService } from 'src/ge
 import { UserAuthServiceService } from './services/authenticationServices/user-auth-service.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { SignalRService } from './services/hubs/signalR.service';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +12,16 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
   title = 'angular-clients';
-  constructor(public auth:UserAuthServiceService,private router:Router,private toastr:ToastrService){
+  constructor(public auth:UserAuthServiceService,private router:Router,private toastr:ToastrService,private signalR:SignalRService){
+    this.signalR.start("product-hub");
 
-    // this.toastr.success('hello',"ben geldim",{
-    // });
+    this.signalR.on("productAdded",(recievedMessage)=>{
+      console.log(recievedMessage);
+    });
+
   }
 
   signOut(){
-
     this.auth.signOut();
     this.router.navigateByUrl("/auth");
   }
