@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthorizeService, ProductService, WeatherForecastService } from 'src/generated_endpoints/index';
 import { UserAuthServiceService } from './services/authenticationServices/user-auth-service.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';

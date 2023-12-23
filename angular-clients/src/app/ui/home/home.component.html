@@ -1,1 +1,14 @@
-<p>home works!</p>
+
+<div class="row">
+
+  <div *ngFor="let item of productList " class="card" style="width: 18rem; margin: 10px;">
+    <img src="/assets/diet.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{item.name}}</h5>
+      <p class="card-text">{{item.price}} - TL</p>
+      <p class="card-text">{{item.stock}} adet mevcut</p>
+      <a href="#" class="btn btn-primary">Sepete Ekle</a>
+    </div>
+  </div>
+</div>
+

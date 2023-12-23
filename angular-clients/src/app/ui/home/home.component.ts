@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthorizeService } from 'src/generated_endpoints';
+import { AuthorizeService, ProductDto, ProductService } from 'src/generated_endpoints';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +7,11 @@ import { AuthorizeService } from 'src/generated_endpoints';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  constructor(private service:AuthorizeService){
-    service.authorizeAdminRoleCheckPost().subscribe(x=>{
-      x
-    });
+  productList:Array<ProductDto>=[];
+  constructor(private service:AuthorizeService,private productService:ProductService){
+    productService.productGetAllProdutsPost().subscribe(x=>{
+      this.productList=x;
+    })
   }
 
 }
