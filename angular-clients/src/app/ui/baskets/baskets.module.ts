@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasketsComponent } from './baskets.component';
+import { DynamicLoadComponentDirective } from 'src/app/directives/dynamic-load-component.directive';
 
 
 
@@ -12,7 +13,8 @@ import { BasketsComponent } from './baskets.component';
     CommonModule
   ],
   exports:[
-    BasketsComponent
+    BasketsComponent,
+
   ]
 })
 export class BasketsModule { }

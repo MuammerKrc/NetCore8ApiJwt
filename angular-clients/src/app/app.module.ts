@@ -10,11 +10,14 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpErrorHandlerInterceptorService } from './services/httpServices/http-error-handler-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DynamicLoadComponentDirective } from './directives/dynamic-load-component.directive';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-  ],
+    DynamicLoadComponentDirective,
+    ],
   imports: [
     ApiModule.forRoot(apiConfigFactory),
     BrowserModule,
